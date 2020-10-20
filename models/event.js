@@ -5,6 +5,7 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     static associate(models) {
+      this.courses = this.hasMany(models.Courses)
     }
   };
   Event.init({
