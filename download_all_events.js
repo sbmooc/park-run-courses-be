@@ -2,9 +2,9 @@ const tiny = require('tiny-json-http')
 var url = 'https://images.parkrun.com/events.json'
 const db = require('./models')
 
-const filter_uk_events=(response)=>{
+const filter_uk_events=(response, countrycode_filter = 97)=>{
     response.features = response.features.filter(
-        feature => feature.properties.countrycode == 97
+        feature => feature.properties.countrycode == countrycode_filter 
     ).filter(
         feature => feature.properties.seriesid == 1
     )
