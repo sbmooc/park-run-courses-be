@@ -8,7 +8,7 @@ const filter_uk_events=(response, countrycode_filter = 97)=>{
     ).filter(
         feature => feature.properties.seriesid == 1
     )
-    save_events_to_db(response)
+    return response
 }
 
 const save_events_to_db=(events)=>{
@@ -28,7 +28,8 @@ const download_all_events = (err, response) =>{
         console.error(err)
     }
     else {
-        return filter_uk_events(response.body.events)
+        events = filter_uk_events(response.body.events)
+        save_events_to_db(events)
     }
 }
 

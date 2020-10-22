@@ -6,11 +6,12 @@ const download_strava_segment = (segment_id) => {
     return tiny.get({url})
 }
 
-const save_course = (event_id, name, geometry) => {
-    db.Course.create(
+const save_course = (event_id, name, latlng) => {
+    var latlng = latlng.join('|')
+    db.Course.create(   
         {
             name: name,
-            geometry: geometry,
+            latlng: latlng,
             EventId: event_id 
         }
     )

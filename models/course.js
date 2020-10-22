@@ -13,8 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       primaryKey: true
     },
-    name: DataTypes.STRING
-  }, {
+    name: DataTypes.STRING,
+    latlng: DataTypes.STRING
+  }, 
+  {
     sequelize,
     modelName: 'Course',
   });
