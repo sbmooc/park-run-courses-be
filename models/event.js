@@ -5,11 +5,14 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     static associate(models) {
-      this.courses = this.hasMany(models.Courses)
+      this.courses = this.hasMany(models.Course)
     }
   };
   Event.init({
-    id: DataTypes.INTEGER,
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true
+    },
     name: DataTypes.STRING,
     latitude: DataTypes.INTEGER,
     longitude: DataTypes.INTEGER
