@@ -1,11 +1,17 @@
 const express = require('express')
 const db = require('./models')
 const assert = require('assert')
-const bodyParser = require('body-parser');
 const { save_course, download_strava_segment } = require('./download_strava_segment');
 const app = express()
 app.use(express.json())
 const port = 3000
+
+app.use(function (req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	next();
+});
 
 
 app.get('/events', (req, res) => {
@@ -29,16 +35,20 @@ app.get('/events/:eventId', (req, res) => {
 })
 
 app.get('/courses', (req, res) => {
-	db.Course.findAll().then(events => {
-		res.json(events)
+	db.Course.findAll({
+		where: {
+			...req.query
+		}
 	}
-	)
+	).then(events => {
+		res.json(events)
+	})
 })
 
 app.get('/courses/:courseId', (req, res) => {
 	db.Course.findAll({
 		where: {
-			id: req.params['eventId']
+			id: req.params['courseId']
 		}
 	}
 	).then(courses => {
@@ -48,25 +58,36 @@ app.get('/courses/:courseId', (req, res) => {
 	)
 })
 
-const validate_courses_post = (data) => {
-	return { segmentId: data.segmentId, eventId: data.eventId, name: data.name}
+app.post('/segments/:segmentId', (req, res) => {
+	const segmentId = req.params['segmentId']
+	download_strava_segment(segmentId).then(
+		response => {
+			res.send(response.body.latlng)
+		}).catch((err) => {
+			res.status(400)
+			res.send()
+		}
+		)
+})
+
+const course_data_validation = (data) => {
+	return { segmentId: data.segmentId, eventId: data.eventId, name: data.name }
 }
 
 app.post('/courses/', (req, res) => {
 	try {
-		var {segmentId, eventId, name} = validate_courses_post(req.body)
+		var { segmentId, eventId, name } = course_data_validation(req.body)
 	}
 	catch {
 		return res.status(400)
 	}
-	finally {
 	download_strava_segment(segmentId).then(
 		strava_response => {
-			save_course(eventId, name, strava_response.latlng)
+			save_course(eventId, name, strava_response.body.latlng)
 		}
 	)
-	return res.send('all ok')
-	}
+	res.status(201)
+	res.send()
 })
 
 
