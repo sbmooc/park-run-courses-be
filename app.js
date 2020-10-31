@@ -71,7 +71,7 @@ app.post('/segments/:segmentId', (req, res) => {
 })
 
 const course_data_validation = (data) => {
-	return { segmentId: data.segmentId, eventId: data.eventId, name: data.name }
+	return { segmentId: data.segmentId, eventId: data.eventId, name: data.courseName }
 }
 
 app.post('/courses/', (req, res) => {
