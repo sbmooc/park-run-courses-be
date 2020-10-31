@@ -15,6 +15,7 @@ const save_events_to_db=(events)=>{
     for (var event of events.features){
         db.Event.create(
             {
+                id: event.id,
                 name: event.properties.EventLongName,
                 latitude: event.geometry.coordinates[0],
                 longitude: event.geometry.coordinates[1]
