@@ -23,10 +23,11 @@ const convertDbObjects = (dbObjects) => {
         features: []
     }
     dbObjects.forEach(dbObject => {
+        const coordinates = convertLatLngString(dbObject.latLng)
         geoJson.features.push(
             {
                 type: 'Feature',
-                geometry: latLngToLinestring(dbObject.latLng),
+                geometry: latLngToLinestring(coordinates),
                 properties: {
                     name: dbObject.name,
                     id: dbObject.id,

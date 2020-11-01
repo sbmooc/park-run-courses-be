@@ -24,25 +24,20 @@ const testCourseCollection = [
         name: 'TestCourse1',
         id: 1,
         eventId: 2,
-        latLng: [
-            [1, 2], [2, 3], [3, 4], [4, 5]
-        ]
+        latLng: '1,2|2,3|3,4|4,5'
+        
     },
     {
         name: 'TestCourse2',
         id: 2,
         eventId: 2,
-        latLng: [
-            [1, 2], [2, 3], [3, 4], [4, 5]
-        ]
+        latLng: '1,2|2,3|3,4|4,5'
     },
     {
         name: 'TestCourse3',
         id: 3,
         eventId: 2,
-        latLng: [
-            [1, 2], [2, 3], [3, 4], [4, 5]
-        ]
+        latLng: '1,2|2,3|3,4|4,5'
     }
 ]
 
@@ -52,10 +47,55 @@ const validGeoJsonOneCourse = {
         geometry: {
             type: 'LineString',
             coordinates: [[1,2], [2,3], [3, 4], [4, 5]]
+        },
+        type: 'Feature',
+        properties: {
+            id: 1,
+            name: 'TestCourse'
         }
     }
     ]
 }
+
+const validGeoJsonThreeCourses = {
+    type: 'FeatureCollection',
+    features: [
+        {
+        geometry: {
+            type: 'LineString',
+            coordinates: [[1,2], [2,3], [3, 4], [4, 5]]
+        },
+        type: 'Feature',
+        properties: {
+            id: 1,
+            name: 'TestCourse1'
+        }
+    },
+        {
+        geometry: {
+            type: 'LineString',
+            coordinates: [[1,2], [2,3], [3, 4], [4, 5]]
+        },
+        type: 'Feature',
+        properties: {
+            id: 2,
+            name: 'TestCourse2'
+        }
+    },
+        {
+        geometry: {
+            type: 'LineString',
+            coordinates: [[1,2], [2,3], [3, 4], [4, 5]]
+        },
+        type: 'Feature',
+        properties: {
+            id: 3,
+            name: 'TestCourse3'
+        }
+    }
+    ]
+}
+
 
 latLngString = "1,2|2,3|3,4|4,5"
 validLatLngArray = [[1, 2], [2, 3], [3, 4], [4, 5]]
