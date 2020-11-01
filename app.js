@@ -2,7 +2,7 @@ const express = require('express')
 const db = require('./models')
 const assert = require('assert')
 const { save_course, download_strava_segment } = require('./download_strava_segment');
-const { convertDbObjects } = require('./geoJsonhelpers')
+const { convertCourses, convertEvents} = require('./geoJsonhelpers')
 const app = express()
 app.use(express.json())
 const port = 3000
@@ -17,7 +17,7 @@ app.use(function (req, res, next) {
 
 app.get('/events', (req, res) => {
 	db.Event.findAll().then(events => {
-		res.json(convertDbObjects(events))
+		res.json(convertEvents(events))
 	}
 	)
 })
@@ -30,7 +30,7 @@ app.get('/events/:eventId', (req, res) => {
 	}
 	).then(events => {
 		assert(events.length == 1)
-		res.json(convertDbObjects(events))
+		res.json(convertEvents(events))
 	}
 	)
 })
@@ -41,8 +41,8 @@ app.get('/courses', (req, res) => {
 			...req.query
 		}
 	}
-	).then(events => {
-		res.json(convertDbObjects(events))
+	).then(courses => {
+		res.json(convertCourses(courses))
 	})
 })
 
@@ -54,7 +54,7 @@ app.get('/courses/:courseId', (req, res) => {
 	}
 	).then(courses => {
 		assert(courses.length == 1)
-		res.json(convertDbObjects(courses))
+		res.json(convertCourses(courses))
 	}
 	)
 })
