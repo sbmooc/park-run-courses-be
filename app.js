@@ -71,6 +71,14 @@ app.post('/segments/:segmentId', (req, res) => {
 })
 
 const course_data_validation = (data) => {
+	const required_keys = ['segmentId', 'eventId', 'courseName']
+	required_keys.forEach(
+		(key) => {
+			if (!(key in data)){
+				throw	
+			}
+		}
+	)
 	return { segmentId: data.segmentId, eventId: data.eventId, name: data.courseName }
 }
 
@@ -79,7 +87,8 @@ app.post('/courses/', (req, res) => {
 		var { segmentId, eventId, name } = course_data_validation(req.body)
 	}
 	catch {
-		return res.status(400)
+		res.status(400)
+		res.send()
 	}
 	download_strava_segment(segmentId).then(
 		strava_response => {
