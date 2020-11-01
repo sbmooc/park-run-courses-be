@@ -1,4 +1,5 @@
 var assert = require('assert');
+
 const latLngToLinestring = (latLng) => {
     assertArrayCoordinatesLooksValid(latLng)
     return {
@@ -16,4 +17,11 @@ const assertArrayCoordinatesLooksValid = (coordinates) => {
     })
 }
 
-module.exports = {latLngToLinestring}
+const convertDbObject = () => {
+    console.log('hello')
+}
+
+module.exports = {
+    latLngToLinestring,
+    convertDbObject
+}
