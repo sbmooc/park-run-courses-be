@@ -1,4 +1,4 @@
-const { latLngToLinestring, convertCourses, convertEvents, convertLatLngString } = require('../geoJsonhelpers')
+const {  latLngToLinestring, convertCourses, convertEvents, convertLatLngString, convertLatLngToLngLat} = require('../geoJsonhelpers')
 
 const validGeoJsonGeometry = {
     type: 'LineString',
@@ -211,4 +211,8 @@ test('convert a Event object to valid GeoJson', () => {
 
 test('convert multiple Events objects to valid GeoJson', () => {
     expect(convertEvents(testEventCollection)).toEqual(validGeoJsonThreeEvents)
+})
+
+test('convert latLng to lngLat', () => {
+    expect(convertLatLngToLngLat([[1,2], [3,4], [5,6]])).toEqual([[2, 1], [4, 3], [6, 5]])
 })

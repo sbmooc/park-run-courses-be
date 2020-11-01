@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     name: DataTypes.STRING,
-    latlng: DataTypes.STRING
+    lnglat: DataTypes.STRING
   }, 
   {
     sequelize,

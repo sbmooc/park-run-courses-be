@@ -17,8 +17,8 @@ const save_events_to_db=(events)=>{
             {
                 id: event.id,
                 name: event.properties.EventLongName,
-                latitude: event.geometry.coordinates[0],
-                longitude: event.geometry.coordinates[1]
+                longitude: event.geometry.coordinates[0],
+                latitude: event.geometry.coordinates[1],
             }
         )
     }

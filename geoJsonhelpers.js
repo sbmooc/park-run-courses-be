@@ -72,9 +72,14 @@ const convertLatLngString = (latLngString) => {
     return newLatLng
 }
 
+const convertLatLngToLngLat = (latlng) => {
+    return latlng.map(corordinates => {return [corordinates[1], corordinates[0]]})
+}
+
 module.exports = {
     latLngToLinestring,
     convertCourses,
     convertEvents,
-    convertLatLngString
+    convertLatLngString,
+    convertLatLngToLngLat
 }
