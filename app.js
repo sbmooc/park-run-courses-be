@@ -2,6 +2,7 @@ const express = require('express')
 const db = require('./models')
 const assert = require('assert')
 const { save_course, download_strava_segment } = require('./download_strava_segment');
+const { convertDbObjects } = require('./geoJsonhelpers')
 const app = express()
 app.use(express.json())
 const port = 3000
@@ -16,7 +17,7 @@ app.use(function (req, res, next) {
 
 app.get('/events', (req, res) => {
 	db.Event.findAll().then(events => {
-		res.json(events)
+		res.json(convertDbObjects(events))
 	}
 	)
 })
@@ -29,7 +30,7 @@ app.get('/events/:eventId', (req, res) => {
 	}
 	).then(events => {
 		assert(events.length == 1)
-		res.json(events[0])
+		res.json(convertDbObjects(events))
 	}
 	)
 })
@@ -41,7 +42,7 @@ app.get('/courses', (req, res) => {
 		}
 	}
 	).then(events => {
-		res.json(events)
+		res.json(convertDbObjects(events))
 	})
 })
 
@@ -53,7 +54,7 @@ app.get('/courses/:courseId', (req, res) => {
 	}
 	).then(courses => {
 		assert(courses.length == 1)
-		res.json(courses[0])
+		res.json(convertDbObjects(courses))
 	}
 	)
 })
@@ -75,7 +76,7 @@ const course_data_validation = (data) => {
 	required_keys.forEach(
 		(key) => {
 			if (!(key in data)){
-				throw	
+				throw 'Incorrect keys missing '	+ key
 			}
 		}
 	)

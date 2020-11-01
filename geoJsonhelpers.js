@@ -17,20 +17,20 @@ const assertArrayCoordinatesLooksValid = (coordinates) => {
     })
 }
 
-const convertDbObjects = (dbObjects) => {
+const convertCourse = (courses) => {
     const geoJson = {
         type: 'FeatureCollection',
         features: []
     }
-    dbObjects.forEach(dbObject => {
-        const coordinates = convertLatLngString(dbObject.latLng)
+    courses.forEach(course=> {
+        const coordinates = convertLatLngString(course.latLng)
         geoJson.features.push(
             {
                 type: 'Feature',
                 geometry: latLngToLinestring(coordinates),
                 properties: {
-                    name: dbObject.name,
-                    id: dbObject.id,
+                    name: course.name,
+                    id: course.id,
                 }
             }
         )
@@ -51,6 +51,6 @@ const convertLatLngString = (latLngString) => {
 
 module.exports = {
     latLngToLinestring,
-    convertDbObjects,
+    convertCourse,
     convertLatLngString
 }
