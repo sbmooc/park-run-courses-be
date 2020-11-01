@@ -17,7 +17,7 @@ const assertArrayCoordinatesLooksValid = (coordinates) => {
     })
 }
 
-const convertCourse = (courses) => {
+const convertCourses = (courses) => {
     const geoJson = {
         type: 'FeatureCollection',
         features: []
@@ -38,6 +38,29 @@ const convertCourse = (courses) => {
     return geoJson
 }
 
+const convertEvents = (events) => {
+    const geoJson = {
+        type: 'FeatureCollection',
+        features: []
+    }
+    events.forEach(event => {
+        geoJson.features.push(
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [event.longitude, event.latitude]
+                },
+                properties: {
+                    name: event.name,
+                    id: event.id,
+                }
+            }
+        )
+    })
+    return geoJson
+}
+
 const convertLatLngString = (latLngString) => {
     newLatLng = []
     latLngString.split('|').forEach(
@@ -51,6 +74,7 @@ const convertLatLngString = (latLngString) => {
 
 module.exports = {
     latLngToLinestring,
-    convertCourse,
+    convertCourses,
+    convertEvents,
     convertLatLngString
 }

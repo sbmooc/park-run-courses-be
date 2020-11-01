@@ -1,4 +1,4 @@
-const { latLngToLinestring, convertDbObjects, convertLatLngString } = require('../geoJsonhelpers')
+const { latLngToLinestring, convertCourses, convertEvents, convertLatLngString } = require('../geoJsonhelpers')
 
 const validGeoJsonGeometry = {
     type: 'LineString',
@@ -10,7 +10,7 @@ const validGeoJsonGeometry = {
     ]
 }
 
-// TODO use actual sequalize models, this is ropey af
+// TODO use actual sequalize models, this is a super ropey approach 
 const testCourse = {
     name: 'TestCourse',
     id: 1,
@@ -96,6 +96,90 @@ const validGeoJsonThreeCourses = {
     ]
 }
 
+const testEvent = {
+    name: 'TestEvent',
+    id: 1,
+    latitude: 2,
+    longitude: 1
+}
+
+const testEventCollection = [
+    {
+        name: 'TestEvent1',
+        id: 1,
+        longitude: 1,
+        latitude: 2,
+    },
+    {
+        name: 'TestEvent2',
+        id: 2,
+        longitude: 3,
+        latitude: 4,
+    },
+    {
+        name: 'TestEvent3',
+        id: 3,
+        longitude: 5,
+        latitude: 6
+    }
+]
+
+const validGeoJsonOneEvent = {
+    type: 'FeatureCollection',
+    features: [
+        {
+        geometry: {
+            type: 'Point',
+            coordinates: [1, 2]
+        },
+        type: 'Feature',
+        properties: {
+            id: 1,
+            name: 'TestEvent'
+        }
+    }
+    ]
+}
+
+const validGeoJsonThreeEvents = {
+    type: 'FeatureCollection',
+    features: [
+        {
+        geometry: {
+            type: 'Point',
+            coordinates: [1, 2]
+        },
+        type: 'Feature',
+        properties: {
+            id: 1,
+            name: 'TestEvent1'
+        }
+    },
+        {
+        geometry: {
+            type: 'Point',
+            coordinates: [3, 4]
+        },
+        type: 'Feature',
+        properties: {
+            id: 2,
+            name: 'TestEvent2'
+        }
+    },
+        {
+        geometry: {
+            type: 'Point',
+            coordinates: [5, 6]
+        },
+        type: 'Feature',
+        properties: {
+            id: 3,
+            name: 'TestEvent3'
+        }
+    }
+    ]
+}
+
 
 latLngString = "1,2|2,3|3,4|4,5"
 validLatLngArray = [[1, 2], [2, 3], [3, 4], [4, 5]]
@@ -113,10 +197,18 @@ test('convert a latLng string into an array of coordinates', () => {
     expect(convertLatLngString(latLngString)).toEqual(validLatLngArray);
 })
 
-test('convert a Course object GeoJson', () => {
-    expect(convertDbObjects([testCourse])).toEqual(validGeoJsonOneCourse)
+test('convert a Course object to valid GeoJson', () => {
+    expect(convertCourses([testCourse])).toEqual(validGeoJsonOneCourse)
 })
 
 test('convert multiple Course objects to valid GeoJson', () => {
-    expect(convertDbObjects(testCourseCollection)).toEqual(validGeoJsonThreeCourses)
+    expect(convertCourses(testCourseCollection)).toEqual(validGeoJsonThreeCourses)
+})
+
+test('convert a Event object to valid GeoJson', () => {
+    expect(convertEvents([testEvent])).toEqual(validGeoJsonOneEvent)
+})
+
+test('convert multiple Events objects to valid GeoJson', () => {
+    expect(convertEvents(testEventCollection)).toEqual(validGeoJsonThreeEvents)
 })
