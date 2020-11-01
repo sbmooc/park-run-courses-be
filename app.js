@@ -42,7 +42,10 @@ app.get('/courses', (req, res) => {
 		}
 	}
 	).then(courses => {
-		res.json(convertCourses(courses))
+		const res_ = convertCourses(courses)
+		console.log(res_)
+		console.log(res_.features[0].geometry)
+		res.json(res_)
 	})
 })
 

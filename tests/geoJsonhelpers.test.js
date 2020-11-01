@@ -15,7 +15,7 @@ const testCourse = {
     name: 'TestCourse',
     id: 1,
     eventId: 2,
-    latLng: "1,2|2,3|3,4|4,5"
+    lnglat: "1,2|2,3|3,4|4,5"
     
 }
 
@@ -24,20 +24,20 @@ const testCourseCollection = [
         name: 'TestCourse1',
         id: 1,
         eventId: 2,
-        latLng: '1,2|2,3|3,4|4,5'
+        lnglat: '1,2|2,3|3,4|4,5'
         
     },
     {
         name: 'TestCourse2',
         id: 2,
         eventId: 2,
-        latLng: '1,2|2,3|3,4|4,5'
+        lnglat: '1,2|2,3|3,4|4,5'
     },
     {
         name: 'TestCourse3',
         id: 3,
         eventId: 2,
-        latLng: '1,2|2,3|3,4|4,5'
+        lnglat: '1,2|2,3|3,4|4,5'
     }
 ]
 
@@ -181,7 +181,8 @@ const validGeoJsonThreeEvents = {
 }
 
 
-latLngString = "1,2|2,3|3,4|4,5"
+latLngString = "1.5,2.5|-0.2,1.3|-1.3,4|4,5"
+validLatLngArrayWithFloats = [[1.5, 2.5], [-0.2,1.3], [-1.3, 4], [4, 5]]
 validLatLngArray = [[1, 2], [2, 3], [3, 4], [4, 5]]
 invalidLatLngArray = [[1, 2], [2, 3, 4], [3, 4], [4, 5]]
 
@@ -194,7 +195,7 @@ test('expect an invalid LatLng array to throw an error', () => {
 });
 
 test('convert a latLng string into an array of coordinates', () => {
-    expect(convertLatLngString(latLngString)).toEqual(validLatLngArray);
+    expect(convertLatLngString(latLngString)).toEqual(validLatLngArrayWithFloats);
 })
 
 test('convert a Course object to valid GeoJson', () => {

@@ -23,7 +23,7 @@ const convertCourses = (courses) => {
         features: []
     }
     courses.forEach(course=> {
-        const coordinates = convertLatLngString(course.latLng)
+        const coordinates = convertLatLngString(course.lnglat)
         geoJson.features.push(
             {
                 type: 'Feature',
@@ -66,7 +66,7 @@ const convertLatLngString = (latLngString) => {
     latLngString.split('|').forEach(
         coordiante => {
             const res = coordiante.split(',')
-            newLatLng.push(res.map(str => parseInt(str)))
+            newLatLng.push(res.map(str => parseFloat(str)))
         }
     )
     return newLatLng
