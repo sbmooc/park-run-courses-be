@@ -10,7 +10,8 @@ const port = 3000
 app.use(function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
 	res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+	res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+	res.header("Cache-Control", "no-store")
 	next();
 });
 
@@ -42,10 +43,7 @@ app.get('/courses', (req, res) => {
 		}
 	}
 	).then(courses => {
-		const res_ = convertCourses(courses)
-		console.log(res_)
-		console.log(res_.features[0].geometry)
-		res.json(res_)
+		res.json(convertCourses(courses))
 	})
 })
 
@@ -97,10 +95,10 @@ app.post('/courses/', (req, res) => {
 	download_strava_segment(segmentId).then(
 		strava_response => {
 			save_course(eventId, name, strava_response.body.latlng)
+			res.status(201)
+			res.send()
 		}
 	)
-	res.status(201)
-	res.send()
 })
 
 
